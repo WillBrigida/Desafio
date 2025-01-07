@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BrownianMotion.Modules.Main.MainPage"
+    BackgroundColor="#141414"
+    xmlns:main="clr-namespace:BrownianMotion.Modules.Main"
+    x:DataType="main:MainPageViewModel"
+    Shell.NavBarIsVisible="False"
+    Padding="30">
+
+    <ContentPage.BindingContext>
+        <main:MainPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid
+        RowDefinitions="Auto,*">
+
+        <Label
+            FontAttributes="Bold"
+            FontSize="50"
+            Text="Movimento Browniano"/>
+
+        <Grid
+            Margin="0,50,0,0"
+            Grid.Row="1"
+            ColumnSpacing="30"
+            VerticalOptions="Start"
+            ColumnDefinitions="3*,*"> 
+
+            <GraphicsView
+                x:Name="graphicsView"
+                BackgroundColor="White"
+                Drawable="{Binding GraphicsDrawable}"
+                HeightRequest="600"
+                HorizontalOptions="Fill">
+            </GraphicsView>
+
+            <!-- <Grid
+                HeightRequest="589"
+                WidthRequest="987"
+                HorizontalOptions="Center"
+                BackgroundColor="#30ff0000"
+                x:Name="grid">
+
+            </Grid> -->
+
+            <VerticalStackLayout
+                VerticalOptions="Fill"
+                Grid.Column="1"
+                Spacing="7">
+
+                <Label FontSize="Subtitle"
+                       Text="Preço Inicial ($)"/>
+                <Entry
+                    FontSize="Subtitle"
+                    Margin="0,0,0,10"
+                    Keyboard="Numeric"
+                    TextChanged="Entry_TextChanged"
+                    HeightRequest="50"
+                    PlaceholderColor="Gray"
+                    Placeholder="Informe um valor Inicial"
+                    Text="{Binding InitialPrice}"/>
+
+                <Label FontSize="Subtitle"
+                       Text="Volatilidade média (%)"/>
+                <Entry
+                    FontSize="Subtitle"
+                    Margin="0,0,0,10"
+                    Keyboard="Numeric"
+                    TextChanged="Entry_TextChanged"
+                    HeightRequest="50"
+                    PlaceholderColor="Gray"
+                    Placeholder="Informe um valor de volatilidade"
+                    Text="{Binding Sigma}"/>
+
+                <Label FontSize="Subtitle"
+                       Text="Retorno médio (%)"/>
+                <Entry
+                    FontSize="Subtitle"
+                    Margin="0,0,0,10"
+                    Keyboard="Numeric"
+                    TextChanged="Entry_TextChanged"
+                    HeightRequest="50"
+                    PlaceholderColor="Gray"
+                    Placeholder="Informe um retorno médio"
+                    Text="{Binding Mean}"/>
+
+                <Grid>
+                    <Label
+                        FontSize="Subtitle"
+                        HorizontalOptions="End"
+                        Grid.Column="2"
+                        Text="{Binding NumDays, Mode=TwoWay}"
+                        VerticalOptions="Center"/>
+
+                    <Label
+                        FontSize="Subtitle"
+                        Text="Tempo (dias)"/>
+                </Grid>
+
+                <Slider
+                    Grid.Column="1"
+                    Maximum="1000"
+                    Minimum="0"
+                    VerticalOptions="Center"
+                    Value="{Binding NumDays}"/>
+
+                <Button
+                    FontSize="Subtitle"
+                    Margin="0,20,0,0"
+                    BackgroundColor="White"
+                    HeightRequest="60"
+                    VerticalOptions="End"
+                    Command="{Binding OnGenerateSimulationCommand}"
+                    Text="Gerar simulação"/>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
+
+
+
+
+</ContentPage>
