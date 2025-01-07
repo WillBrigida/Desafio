@@ -1,5 +1,3 @@
-using System;
-
 namespace BrownianMotion.Modules.Utils;
 
 public class GraphicsDrawable : IDrawable
@@ -13,7 +11,7 @@ public class GraphicsDrawable : IDrawable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-`        if (prices == null || prices.Length == 0) return;
+        if (prices == null || prices.Length == 0) return;
 
         float padding = 30; // Espaço de padding ao redor do desenho
         float spot = 10; // Tamanho do ponto 
@@ -38,9 +36,13 @@ public class GraphicsDrawable : IDrawable
         path.MoveTo(X, normalizedY);
         canvas.FillEllipse(X - spot / 2, normalizedY - spot / 2, spot, spot);
 
-        canvas.StrokeColor = Colors.LightGray; // Define a cor da linha
+        canvas.StrokeColor = Color.FromArgb("#306E6E6E"); // Define a cor das guias
         canvas.StrokeSize = 2f;
         canvas.DrawLine(X, 0, X, dirtyRect.Height); //Linha guia vertical
+
+        canvas.DrawLine(0, normalizedY, dirtyRect.Width, normalizedY); //Linha guia horizontal
+        canvas.DrawString($"{prices[0]}", 0 + 5, normalizedY, HorizontalAlignment.Center);
+
 
         // Itera sobre os preços para desenhar o caminho e os pontos
         for (int i = 1; i < prices.Length; i++)
@@ -58,18 +60,18 @@ public class GraphicsDrawable : IDrawable
                 //Desenhando as guias verticais
                 canvas.DrawLine(X, 0, X, dirtyRect.Height);
 
-
-                //  canvas.FontColor = Colors.Black;
-                // canvas.FontSize = 20;
-                // canvas.DrawString($"dia {i}", X, dirtyRect.Height, HorizontalAlignment.Center);
+                //Desenhando os dias nas guias verticais
+                canvas.FontColor = Colors.Gray;
+                canvas.FontSize = 16;
+                canvas.DrawString($"{i}", X, dirtyRect.Height - 5, HorizontalAlignment.Center);
             }
         }
 
         //Desenhando as guias horizontais
-        canvas.DrawLine(0, normalizedY, width, normalizedY); //Linha guia horizontal
-        canvas.DrawLine(0, dirtyRect.Height / 2, dirtyRect.Width, dirtyRect.Height / 2); 
-        canvas.DrawLine(0, height - ((float)prices.Min() - minPrice) / range * height + padding, dirtyRect.Width, height - ((float)prices.Min() - minPrice) / range * height + padding); 
-        canvas.DrawLine(0, height - ((float)prices.Max() - minPrice) / range * height + padding, dirtyRect.Width, height - ((float)prices.Max() - minPrice) / range * height + padding); 
+        canvas.DrawLine(0, dirtyRect.Height / 2, dirtyRect.Width, dirtyRect.Height / 2);
+
+        canvas.DrawLine(0, height - ((float)prices.Min() - minPrice) / range * height + padding, dirtyRect.Width, height - ((float)prices.Min() - minPrice) / range * height + padding);
+        canvas.DrawLine(0, height - ((float)prices.Max() - minPrice) / range * height + padding, dirtyRect.Width, height - ((float)prices.Max() - minPrice) / range * height + padding);
 
         // Desenhando o caminho no canvas
         canvas.StrokeColor = Colors.RoyalBlue; // Define a cor da linha

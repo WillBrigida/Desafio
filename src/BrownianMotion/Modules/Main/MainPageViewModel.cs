@@ -39,11 +39,13 @@ public class MainPageViewModel : BaseViewModel
 
     public ICommand OnGenerateSimulationCommand => new Command(async () =>
     {
-        if (!Sigma.HasValue || !Mean.HasValue || !InitialPrice.HasValue || !NumDays.HasValue)
+        if (!Sigma.HasValue || !Mean.HasValue || !InitialPrice.HasValue || !NumDays.HasValue )
         {
             await Shell.Current.ToastAlert("O preenchimento de todos os campos é obrigatório.", TimeSpan.FromSeconds(4));
             return;
         }
+
+        if(NumDays.Value < 0) return;
 
         var graphicsDrawable = 
         new GraphicsDrawable(GenereteBrownianMotion(Sigma.Value / 100, Mean.Value / 100, InitialPrice.Value, NumDays.Value));
