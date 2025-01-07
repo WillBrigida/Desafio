@@ -16,17 +16,20 @@
     <Grid
         RowDefinitions="Auto,*">
 
-        <Label
-            FontAttributes="Bold"
-            FontSize="50"
-            Text="Movimento Browniano"/>
+        <Grid>
+            <Label
+                FontAttributes="Bold"
+                FontSize="50"
+                Text="Movimento Browniano"/>
 
+           
+        </Grid>
         <Grid
             Margin="0,50,0,0"
             Grid.Row="1"
             ColumnSpacing="30"
             VerticalOptions="Start"
-            ColumnDefinitions="3*,*"> 
+            ColumnDefinitions="3*,*">
 
             <GraphicsView
                 x:Name="graphicsView"
@@ -46,7 +49,7 @@
             </Grid> -->
 
             <VerticalStackLayout
-                VerticalOptions="Fill"
+                VerticalOptions="Center"
                 Grid.Column="1"
                 Spacing="7">
 
@@ -114,6 +117,8 @@
                     VerticalOptions="End"
                     Command="{Binding OnGenerateSimulationCommand}"
                     Text="Gerar simulação"/>
+
+                    
             </VerticalStackLayout>
 
         </Grid>

@@ -6,10 +6,10 @@ namespace BrownianMotion.Modules.Main;
 public class MainPageViewModel : BaseViewModel
 {
     #region PROPERTIES . . .
-    private int? _numDays = 5;
-    public double? Sigma { get; set; } = 20;
-    public double? Mean { get; set; } = 1;
-    public double? InitialPrice { get; set; } = 100;
+    private int? _numDays = null!;
+    public double? Sigma { get; set; } = null!;
+    public double? Mean { get; set; } = null!;
+    public double? InitialPrice { get; set; } = null!;
     public int? NumDays
     {
         get => _numDays;
@@ -39,13 +39,13 @@ public class MainPageViewModel : BaseViewModel
 
     public ICommand OnGenerateSimulationCommand => new Command(async () =>
     {
-        if (!Sigma.HasValue || !Mean.HasValue || !InitialPrice.HasValue || !NumDays.HasValue )
+        if (!Sigma.HasValue || !Mean.HasValue || !InitialPrice.HasValue || !NumDays.HasValue)
         {
             await Shell.Current.ToastAlert("O preenchimento de todos os campos é obrigatório.", TimeSpan.FromSeconds(4));
             return;
         }
 
-        if(NumDays.Value < 0) return;
+        if(NumDays.Value < 1) return;
 
         var graphicsDrawable = 
         new GraphicsDrawable(GenereteBrownianMotion(Sigma.Value / 100, Mean.Value / 100, InitialPrice.Value, NumDays.Value));

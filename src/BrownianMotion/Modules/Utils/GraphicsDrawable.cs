@@ -13,7 +13,7 @@ public class GraphicsDrawable : IDrawable
     {
         if (prices == null || prices.Length == 0) return;
 
-        float padding = 30; // Espaço de padding ao redor do desenho
+        float padding = 50; // Espaço de padding ao redor do desenho
         float spot = 10; // Tamanho do ponto 
         float X = padding; // Posição inicial no eixo X
         float minPrice = (float)prices.Min(); // Menor valor 
@@ -39,9 +39,13 @@ public class GraphicsDrawable : IDrawable
         canvas.StrokeColor = Color.FromArgb("#306E6E6E"); // Define a cor das guias
         canvas.StrokeSize = 2f;
         canvas.DrawLine(X, 0, X, dirtyRect.Height); //Linha guia vertical
+                canvas.DrawString($"d 1", X, dirtyRect.Height - 23, HorizontalAlignment.Center);
 
         canvas.DrawLine(0, normalizedY, dirtyRect.Width, normalizedY); //Linha guia horizontal
-        canvas.DrawString($"{prices[0]}", 0 + 5, normalizedY, HorizontalAlignment.Center);
+
+        canvas.FontColor = Colors.WhiteSmoke;
+        canvas.FontSize = 12;
+        canvas.DrawString($"{prices[0]}", 0 + 75, normalizedY, HorizontalAlignment.Center);
 
 
         // Itera sobre os preços para desenhar o caminho e os pontos
@@ -61,17 +65,27 @@ public class GraphicsDrawable : IDrawable
                 canvas.DrawLine(X, 0, X, dirtyRect.Height);
 
                 //Desenhando os dias nas guias verticais
-                canvas.FontColor = Colors.Gray;
-                canvas.FontSize = 16;
-                canvas.DrawString($"{i}", X, dirtyRect.Height - 5, HorizontalAlignment.Center);
+                canvas.FontColor = Colors.WhiteSmoke;
+                canvas.FontSize = 12;
+                canvas.DrawString($"d {i + 1}", X, dirtyRect.Height - 23, HorizontalAlignment.Center);
             }
         }
 
+        var centerValue = (prices.Min() + prices.Max()) / 2;
+        var val = centerValue.ToString("F2");
+        var min = prices.Min().ToString("F2");
+        var max = prices.Max().ToString("F2");
+
         //Desenhando as guias horizontais
         canvas.DrawLine(0, dirtyRect.Height / 2, dirtyRect.Width, dirtyRect.Height / 2);
+        canvas.DrawString($"$ {val}", 0 + 23, dirtyRect.Height / 2, HorizontalAlignment.Center);
+
 
         canvas.DrawLine(0, height - ((float)prices.Min() - minPrice) / range * height + padding, dirtyRect.Width, height - ((float)prices.Min() - minPrice) / range * height + padding);
+        canvas.DrawString($"$ {min}", 0 + 23, height - ((float)prices.Min() - minPrice) / range * height + padding, HorizontalAlignment.Center);
+
         canvas.DrawLine(0, height - ((float)prices.Max() - minPrice) / range * height + padding, dirtyRect.Width, height - ((float)prices.Max() - minPrice) / range * height + padding);
+        canvas.DrawString($"$ {max}", 0 + 23, height - ((float)prices.Max() - minPrice) / range * height + padding, HorizontalAlignment.Center);
 
         // Desenhando o caminho no canvas
         canvas.StrokeColor = Colors.RoyalBlue; // Define a cor da linha
